@@ -46,7 +46,7 @@ class ResultRepository @Inject constructor(
         val response = try {
             api.getResults(year)
         } catch(e: Exception) {
-            return Resource.Error("An unknown error occured.")
+            return Resource.Error(e.message!!)
         }
 
         return Resource.Success(response)

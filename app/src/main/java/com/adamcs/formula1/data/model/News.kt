@@ -1,7 +1,18 @@
 package com.adamcs.formula1.data.model
 
-data class News(
-    val title: String,
-    val description: String,
-    val link: String
-)
+import org.simpleframework.xml.Element
+import org.simpleframework.xml.Root
+
+@Root(strict = false, name = "item")
+class News {
+    @field:Element(name = "title", required = false)
+    lateinit var title: String
+    @field:Element(name = "description", required = false)
+    lateinit var description: String
+    @field:Element(name = "link", required = false)
+    lateinit var link: String
+
+    override fun toString(): String {
+        return "News: (title = $title, description = $description)"
+    }
+}

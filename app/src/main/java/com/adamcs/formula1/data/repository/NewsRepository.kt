@@ -17,7 +17,7 @@ class NewsRepository @Inject constructor(
         val response = try {
             api.getResults()
         } catch(e: Exception) {
-            return Resource.Error("An unknown error occured.")
+            return Resource.Error(e.message!!)
         }
 
         return Resource.Success(response)

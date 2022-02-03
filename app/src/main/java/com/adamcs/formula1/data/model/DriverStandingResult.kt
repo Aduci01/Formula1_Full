@@ -13,8 +13,8 @@ data class MRData (
 )
 
 data class StandingsTable(
-    @SerializedName("StandingsList")
-    val standingsList: StandingsList
+    @SerializedName("StandingsLists")
+    val standingsLists: List<StandingsList>
 )
 
 data class StandingsList(
