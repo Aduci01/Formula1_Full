@@ -1,7 +1,9 @@
 package com.adamcs.formula1.di
 
+import com.adamcs.formula1.data.api.ConstructorResultApi
 import com.adamcs.formula1.data.api.NewsApi
-import com.adamcs.formula1.data.api.ResultApi
+import com.adamcs.formula1.data.api.DriverResultApi
+import com.adamcs.formula1.data.repository.NewsRepository
 import com.adamcs.formula1.data.repository.ResultRepository
 import com.adamcs.formula1.util.Constants.ERGAST_URL
 import com.adamcs.formula1.util.Constants.NEWS_URL
@@ -19,12 +21,22 @@ import javax.inject.Singleton
 object AppModule {
     @Singleton
     @Provides
-    fun provideDriverRankingApi(): ResultApi {
+    fun provideDriverRankingApi(): DriverResultApi {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(ERGAST_URL)
             .build()
-            .create(ResultApi::class.java)
+            .create(DriverResultApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideConsrtuctorRankingApi(): ConstructorResultApi {
+        return Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(ERGAST_URL)
+            .build()
+            .create(ConstructorResultApi::class.java)
     }
 
     @Singleton
@@ -40,8 +52,15 @@ object AppModule {
     @Singleton
     @Provides
     fun provideResultRepository(
-        api: ResultApi
-    ) = ResultRepository(api)
+        apiDriver: DriverResultApi,
+        apiConstructor: ConstructorResultApi
+    ) = ResultRepository(apiConstructor = apiConstructor, apiDriver = apiDriver)
+
+    @Singleton
+    @Provides
+    fun provideNewsRepository(
+        api: NewsApi
+    ) = NewsRepository(api)
 
    /* @Singleton
     @Provides

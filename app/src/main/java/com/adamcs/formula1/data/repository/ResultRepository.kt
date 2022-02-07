@@ -1,50 +1,34 @@
 package com.adamcs.formula1.data.repository
 
-import android.util.Log
-import com.adamcs.formula1.data.api.ResultApi
+import com.adamcs.formula1.data.api.ConstructorResultApi
+import com.adamcs.formula1.data.api.DriverResultApi
+import com.adamcs.formula1.data.model.ConstructorStandingResult
 import com.adamcs.formula1.data.model.DriverStandingResult
 import com.adamcs.formula1.util.Resource
 import dagger.hilt.android.scopes.ActivityScoped
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 @ActivityScoped
 class ResultRepository @Inject constructor(
-    private val api: ResultApi
+    private val apiDriver: DriverResultApi,
+    private val apiConstructor: ConstructorResultApi
 ) {
 
     private val TAG = "ResultRepository"
 
-    /*fun getDriverRanking(year: Int):  {
-        api.getResults(year).enqueue(object : Callback<DriverStandingResult?> {
-            override fun onResponse(
-                call: Call<DriverStandingResult?>,
-                response: Response<DriverStandingResult?>
-            ) {
-                if (response.isSuccessful) {
-                    response.body()?.let {  }
-                } else {
-                    Log.d(TAG, "Error: " + response.message())
-                }
-            }
-
-            override fun onFailure(
-                call: Call<DriverStandingResult?>,
-                throwable: Throwable
-            ) {
-                throwable.printStackTrace()
-
-                var errorMsg = "Network request error occured, check LOG"
-                Log.d(TAG, errorMsg)
-            }
-        })
-    }*/
-
     suspend fun getDriverRanking(year: Int): Resource<DriverStandingResult> {
         val response = try {
-            api.getResults(year)
+            apiDriver.getResults(year)
+        } catch(e: Exception) {
+            return Resource.Error(e.message!!)
+        }
+
+        return Resource.Success(response)
+    }
+
+    suspend fun getConstructorRanking(year: Int): Resource<ConstructorStandingResult> {
+        val response = try {
+            apiConstructor.getResults(year)
         } catch(e: Exception) {
             return Resource.Error(e.message!!)
         }

@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Formula1</string>
+    <string name="news">News</string>
+    <string name="search_placeholder">Search...</string>
+    <string name="rankings">Rankings</string>
+    <string name="year">Year</string>
+    <string name="check_full_article">check full article</string>
+    <string name="season">Season</string>
 </resources>
