@@ -3,8 +3,10 @@ package com.adamcs.formula1.di
 import com.adamcs.formula1.data.api.ConstructorResultApi
 import com.adamcs.formula1.data.api.NewsApi
 import com.adamcs.formula1.data.api.DriverResultApi
+import com.adamcs.formula1.data.api.ScheduleApi
 import com.adamcs.formula1.data.repository.NewsRepository
 import com.adamcs.formula1.data.repository.ResultRepository
+import com.adamcs.formula1.data.repository.ScheduleRepository
 import com.adamcs.formula1.util.Constants.ERGAST_URL
 import com.adamcs.formula1.util.Constants.NEWS_URL
 import dagger.Module
@@ -51,6 +53,16 @@ object AppModule {
 
     @Singleton
     @Provides
+    fun provideScheduleApi(): ScheduleApi {
+        return Retrofit.Builder()
+            .addConverterFactory(SimpleXmlConverterFactory.create())
+            .baseUrl(ERGAST_URL)
+            .build()
+            .create(ScheduleApi::class.java)
+    }
+
+    @Singleton
+    @Provides
     fun provideResultRepository(
         apiDriver: DriverResultApi,
         apiConstructor: ConstructorResultApi
@@ -61,6 +73,12 @@ object AppModule {
     fun provideNewsRepository(
         api: NewsApi
     ) = NewsRepository(api)
+
+    @Singleton
+    @Provides
+    fun provideScheduleRepository(
+        api: ScheduleApi
+    ) = ScheduleRepository(api)
 
    /* @Singleton
     @Provides

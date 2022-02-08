@@ -47,7 +47,9 @@ fun Header (
 
 
 @Composable
-fun CurvedHeaderBackground() {
+fun CurvedHeaderBackground(
+    color: Color = Color.Black
+) {
     Canvas(modifier = Modifier
         .fillMaxWidth()
         .fillMaxHeight(),
@@ -61,7 +63,7 @@ fun CurvedHeaderBackground() {
                     lineTo(size.width, 0.0f);
                     close()
                 },
-                Color.Black,
+                color,
             )
         }
     )

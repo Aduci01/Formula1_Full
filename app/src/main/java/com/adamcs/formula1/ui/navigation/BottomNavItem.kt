@@ -18,4 +18,10 @@ sealed class BottomNavItem(
         titleId = R.string.rankings,
         drawableId = R.drawable.leaderboard
     )
+
+    object Schedule : BottomNavItem(
+        route = "schedule",
+        titleId = R.string.schedule,
+        drawableId = R.drawable.calendar
+    )
 }

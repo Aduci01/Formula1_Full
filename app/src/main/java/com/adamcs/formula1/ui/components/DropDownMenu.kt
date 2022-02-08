@@ -37,7 +37,7 @@ fun DropDownMenu(
 ) {
 
     var expanded by remember { mutableStateOf(false) }
-    val seasons = Array(63) { i -> 1960 + i }
+    val seasons = Array(63) { i -> 2022 - i }
     var selectedSeason by remember { mutableStateOf("2021") }
 
     var textfieldSize by remember { mutableStateOf(Size.Zero) }

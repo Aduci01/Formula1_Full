@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.MaterialTheme
@@ -32,20 +33,31 @@ fun ResultScreen(
     var isDriver by remember { mutableStateOf(true) }
 
     Column(
-        modifier = Modifier.background(Color.Black)
-            .padding(bottom = 40.dp, top = 10.dp),
+        modifier = Modifier
+            .background(Color.White)
+            .padding(bottom = 40.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        DropDownMenu(
-            errorMessage = "Invalid year"
-        ) {
-            resultModel.getResults(year = it)
-        }
+        Box(modifier = Modifier
+            .fillMaxHeight(0.25f)
+            .fillMaxWidth(1f)) {
+            CurvedHeaderBackground(color = Color.Black)
 
-        SwitchButtons(
-            isDriver = isDriver
-        ){
-            isDriver = it
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                DropDownMenu(
+                    errorMessage = "Invalid year"
+                ) {
+                    resultModel.getResults(year = it)
+                }
+
+                SwitchButtons(
+                    isDriver = isDriver
+                ){
+                    isDriver = it
+                }
+            }
         }
 
         Spacer(modifier = Modifier.height(50.dp))
@@ -97,7 +109,11 @@ private fun DriverStandingUi(resultModel: ResultsViewModel){
         CircularLoadingSpinner()
     } else {
         LazyColumn(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black, shape = Shapes.small)
+                .padding(top = 5.dp),
+            contentPadding = PaddingValues(top = 25.dp)
         ) {
             items(resultModel.resultList.value) { result ->
                 Row(
@@ -118,7 +134,11 @@ private fun ConstructorStandingUi(resultModel: ResultsViewModel){
         CircularLoadingSpinner()
     } else {
         LazyColumn(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black, shape = Shapes.small)
+                .padding(top = 5.dp),
+            contentPadding = PaddingValues(top = 25.dp)
         ) {
             items(resultModel.constructorResultList.value) { result ->
                 Row(

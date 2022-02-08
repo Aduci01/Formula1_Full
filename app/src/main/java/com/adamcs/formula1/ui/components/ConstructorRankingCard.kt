@@ -49,10 +49,10 @@ fun ConstructorRankingCard(
                 brush = Brush.radialGradient(
                     colors = listOf(
                         constructorResult.constructor.resources.color,
-                        constructorResult.constructor.resources.color.copy(alpha = 0.3f)
+                        constructorResult.constructor.resources.color.copy(alpha = 0.5f)
                     ),
                     center = Offset(100f, 100f),
-                    radius = 1200.0f
+                    radius = 1000.0f
                 )
             )
             .height(height.dp)
@@ -69,6 +69,21 @@ fun ConstructorRankingCard(
             FirstRow(constructorResult = constructorResult)
             SecondRow(constructorResult = constructorResult)
         }
+
+        Box(modifier = Modifier
+            .fillMaxWidth(1f)
+            .fillMaxHeight(1f)){
+
+            Image(
+                painter = painterResource(id = constructorResult.constructor.resources.logoId),
+                contentDescription = "Constructor Image",
+                Modifier
+                    .align(Alignment.CenterEnd)
+                    .fillMaxHeight(0.6f)
+                    .padding(horizontal = 20.dp),
+                contentScale = ContentScale.FillHeight
+            )
+        }
     }
 }
 
@@ -78,19 +93,19 @@ private fun FirstRow(constructorResult: ConstructorResult){
 
     Row(
         horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
-            painter = painterResource(id = resources.logoId),
-            contentDescription = "Team Logo",
-            modifier = Modifier
-                .padding(horizontal = 5.dp)
-                .width(75.dp)
-                .height(60.dp),
+        Spacer(modifier = Modifier.width(10.dp))
+        
+        Text(
+            text = "#" + constructorResult.position.toString(),
+            color = Color.White,
+            fontSize = 20.sp
         )
 
         Divider(
             modifier = Modifier
-                .height(40.dp)
+                .height(30.dp)
                 .width(2.dp)
                 .offset(x = 10.dp),
             color = Color(Math.min(1f, resources.color.red * 1.2f), Math.min(1f, resources.color.green * 1.2f), Math.min(1f, resources.color.blue * 1.2f)),
@@ -119,22 +134,15 @@ private fun SecondRow(constructorResult: ConstructorResult){
         modifier = Modifier
             .fillMaxHeight(1.0f)
             .padding(horizontal = 15.dp, vertical = 10.dp),
-        verticalAlignment = Alignment.Bottom
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Column(modifier = Modifier.fillMaxWidth(0.33f)) {
-            Text(
-                text = "#" + constructorResult.position,
-                color = Color(1.0f, 1.0f, 1.0f, 0.8f),
-                fontSize = 18.sp
-            )
-
-            Text(
-                text = constructorResult.points.toString() + " pts",
-                color = Color.White,
-                fontWeight = FontWeight.Bold,
-                fontSize = 11.sp,
-                overflow = TextOverflow.Visible,
-            )
-        }
+        Spacer(modifier = Modifier.width(15.dp))
+        Text(
+            text = constructorResult.points.toString() + " pts",
+            color = Color.White,
+            fontWeight = FontWeight.Bold,
+            fontSize = 16.sp,
+            overflow = TextOverflow.Visible,
+        )
     }
 }

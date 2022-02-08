@@ -15,6 +15,7 @@ fun MainScreen() {
     val items = listOf(
         BottomNavItem.Results,
         BottomNavItem.News,
+        BottomNavItem.Schedule
     )
 
     Scaffold(
