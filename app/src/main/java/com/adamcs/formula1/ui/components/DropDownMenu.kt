@@ -29,6 +29,7 @@ import java.lang.NumberFormatException
 
 @Composable
 fun DropDownMenu(
+    seasons: Array<Int>,
     errorMessage: String,
     baseColor: Color = gold,
     shape: Shape = Shapes.small,
@@ -37,8 +38,7 @@ fun DropDownMenu(
 ) {
 
     var expanded by remember { mutableStateOf(false) }
-    val seasons = Array(63) { i -> 2022 - i }
-    var selectedSeason by remember { mutableStateOf("2021") }
+    var selectedSeason by remember { mutableStateOf(seasons[0].toString()) }
 
     var textfieldSize by remember { mutableStateOf(Size.Zero) }
 

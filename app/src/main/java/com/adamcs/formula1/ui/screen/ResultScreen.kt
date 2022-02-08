@@ -47,7 +47,8 @@ fun ResultScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 DropDownMenu(
-                    errorMessage = "Invalid year"
+                    errorMessage = "Invalid year",
+                    seasons = Array(63) { i -> 2022 - i }
                 ) {
                     resultModel.getResults(year = it)
                 }

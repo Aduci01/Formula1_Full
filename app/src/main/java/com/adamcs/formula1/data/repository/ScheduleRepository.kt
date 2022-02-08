@@ -13,9 +13,9 @@ class ScheduleRepository @Inject constructor(
 
     private val TAG = "NewsRepository"
 
-    suspend fun getSchedule(): Resource<ScheduleResult> {
+    suspend fun getSchedule(year: Int): Resource<ScheduleResult> {
         val response = try {
-            api.getSchedule()
+            api.getSchedule(year)
         } catch(e: Exception) {
             return Resource.Error(e.message!!)
         }

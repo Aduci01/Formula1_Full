@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -19,9 +20,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.adamcs.formula1.data.model.News
@@ -42,7 +47,7 @@ fun NewsScreen(
     Column {
         Header(title = stringResource(R.string.news))
 
-        if (!newsModel.isLoaded.value){
+        if (!newsModel.isLoaded.value) {
             CircularLoadingSpinner()
         } else {
             SearchBar(
@@ -50,15 +55,17 @@ fun NewsScreen(
                     .fillMaxWidth()
                     .padding(16.dp),
                 placeholderText = stringResource(R.string.search_placeholder)
-                            ){
+            ) {
                 newsModel.filterNews(it)
             }
             LazyColumn(
                 modifier = Modifier.fillMaxSize()
             ) {
                 items(newsModel.filteredNewsList.value) { news ->
-                    Row(modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Center) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
                         NewsCard(news)
                     }
                     Spacer(modifier = Modifier.height(6.dp))
@@ -71,16 +78,53 @@ fun NewsScreen(
 
 @ExperimentalMaterialApi
 @Composable
-fun NewsCard(news: News){
+fun NewsCard(news: News) {
     val context = LocalContext.current
     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(news.link))
 
     ExpandableTextCard(
         title = news.title,
-        description = news.description,
-    ){
-        Log.d("ASD", "ASD")
-        context.startActivity(intent)
+        content = {
+            NewsContent(description = news.description)
+            {
+                context.startActivity(intent)
+            }
+        },
+    )
+}
+
+@Composable
+private fun NewsContent(
+    description: String,
+    descriptionFontSize: TextUnit = 12.sp,
+    descriptionFontWeight: FontWeight = FontWeight.Normal,
+    descriptionMaxLines: Int = 6,
+    onClick: () -> Unit = {},
+) {
+    Text(
+        text = description,
+        fontSize = descriptionFontSize,
+        fontWeight = descriptionFontWeight,
+        maxLines = descriptionMaxLines,
+        overflow = TextOverflow.Ellipsis,
+        lineHeight = 15.sp,
+    )
+
+    Spacer(modifier = Modifier.height(20.dp))
+
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text(
+            text = stringResource(R.string.check_full_article),
+            color = Color.Gray,
+            fontSize = 15.sp,
+            fontStyle = FontStyle.Italic,
+            modifier = Modifier.clickable {
+                onClick()
+            }
+        )
     }
 }
 

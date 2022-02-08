@@ -14,7 +14,7 @@ import com.adamcs.formula1.ui.screen.ScheduleScreen
 fun BottomNavGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = BottomNavItem.Schedule.route
+        startDestination = BottomNavItem.News.route
     ) {
         composable(route = BottomNavItem.News.route) {
             NewsScreen()

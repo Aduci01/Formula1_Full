@@ -7,6 +7,7 @@ data class Race(
     val round: Int,
     val raceName: String,
 
+    @SerializedName("Circuit")
     val circuit: Circuit,
 
     val date: String,

@@ -42,13 +42,10 @@ fun ExpandableTextCard(
     title: String,
     titleFontSize: TextUnit = 15.sp,
     titleFontWeight: FontWeight = FontWeight.Bold,
-    description: String,
-    descriptionFontSize: TextUnit = 12.sp,
-    descriptionFontWeight: FontWeight = FontWeight.Normal,
-    descriptionMaxLines: Int = 6,
+
     shape: Shape = Shapes.small,
     padding: Dp = 12.dp,
-    onClick: () -> Unit = {},
+    content: @Composable () -> Unit
     ) {
     var expandedState by remember { mutableStateOf(false) }
     val rotationState by animateFloatAsState(
@@ -102,54 +99,8 @@ fun ExpandableTextCard(
                 }
             }
             if (expandedState) {
-                Text(
-                    text = description,
-                    fontSize = descriptionFontSize,
-                    fontWeight = descriptionFontWeight,
-                    maxLines = descriptionMaxLines,
-                    overflow = TextOverflow.Ellipsis,
-                    lineHeight = 15.sp
-                )
-                
-                Spacer(modifier = Modifier.height(20.dp))
-
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    /*Image(
-                        painter = painterResource(id = R.drawable.globe),
-                        contentDescription = "Visit in Browser",
-                        modifier = Modifier.clickable { onClick() }
-                            .width(30.dp)
-                            .height(30.dp)
-                    )*/
-
-                    Text(
-                        text = stringResource(R.string.check_full_article),
-                        color = Color.Gray,
-                        fontSize = 15.sp,
-                        fontStyle = FontStyle.Italic,
-                        modifier = Modifier.clickable {
-                            onClick()
-                        }
-                    )
-                }
-
+                content()
             }
         }
     }
-}
-
-@ExperimentalMaterialApi
-@Composable
-@Preview
-fun ExpandableCardPreview() {
-    ExpandableTextCard(
-        title = "My Title",
-        description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
-                "sed do eiusmod tempor incididunt ut labore et dolore magna " +
-                "aliqua. Ut enim ad minim veniam, quis nostrud exercitation " +
-                "ullamco laboris nisi ut aliquip ex ea commodo consequat."
-    )
 }

@@ -4,6 +4,5 @@ data class Circuit(
     val circuitId: String,
     val circuitName: String,
 
-    var circuitImageId: Int?,
-){
-}
+    var circuitImageId: Int,
+)

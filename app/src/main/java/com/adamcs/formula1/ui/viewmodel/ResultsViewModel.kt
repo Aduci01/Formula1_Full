@@ -37,7 +37,7 @@ class ResultsViewModel @Inject constructor(
     private var driverCoroutineJob: Job? = null
 
     init {
-        getResults(2021)
+        getResults(2022)
     }
 
     fun getResults(year: Int){

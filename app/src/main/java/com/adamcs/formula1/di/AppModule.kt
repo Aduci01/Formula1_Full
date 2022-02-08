@@ -55,7 +55,7 @@ object AppModule {
     @Provides
     fun provideScheduleApi(): ScheduleApi {
         return Retrofit.Builder()
-            .addConverterFactory(SimpleXmlConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(ERGAST_URL)
             .build()
             .create(ScheduleApi::class.java)
