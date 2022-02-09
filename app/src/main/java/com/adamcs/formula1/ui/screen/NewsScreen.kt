@@ -3,10 +3,7 @@ package com.adamcs.formula1.ui.screen
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -19,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -33,10 +31,7 @@ import com.adamcs.formula1.data.model.News
 import com.adamcs.formula1.ui.viewmodel.NewsViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.adamcs.formula1.R
-import com.adamcs.formula1.ui.components.CircularLoadingSpinner
-import com.adamcs.formula1.ui.components.ExpandableTextCard
-import com.adamcs.formula1.ui.components.Header
-import com.adamcs.formula1.ui.components.SearchBar
+import com.adamcs.formula1.ui.components.*
 import com.adamcs.formula1.ui.theme.scarlet
 
 @ExperimentalMaterialApi
@@ -45,7 +40,28 @@ fun NewsScreen(
     newsModel: NewsViewModel = hiltViewModel()
 ) {
     Column {
-        Header(title = stringResource(R.string.news))
+        CurvedHeader(){
+            Box(modifier = Modifier.fillMaxHeight(1f)
+                .fillMaxWidth(1f)){
+                Image(
+                    modifier = Modifier
+                        .align(Alignment.BottomStart)
+                        .width(290.dp)
+                        .padding(vertical = 20.dp),
+                    painter = painterResource(id = R.drawable.f1_car),
+                    contentDescription = "F1 car",
+                )
+                Text(
+                    fontSize = 25.sp,
+                    fontWeight = FontWeight.Bold,
+                    text = stringResource(R.string.news),
+                    color = Color.White,
+                    modifier = Modifier
+                        .align(Alignment.TopCenter)
+                        .padding(vertical = 20.dp)
+                )
+            }
+        }
 
         if (!newsModel.isLoaded.value) {
             CircularLoadingSpinner()

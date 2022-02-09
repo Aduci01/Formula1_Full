@@ -18,31 +18,14 @@ import androidx.compose.ui.unit.sp
 import com.adamcs.formula1.R
 
 @Composable
-fun Header (
-    title: String
+fun CurvedHeader (
+    content: @Composable () -> Unit = { }
 ){
-    Box(modifier = Modifier.fillMaxHeight(0.3f)){
+    Box(modifier = Modifier.fillMaxHeight(0.25f)){
         CurvedHeaderBackground()
-        Image(
-            modifier = Modifier.align(Alignment.BottomStart)
-                .width(330.dp)
-                .padding(vertical = 20.dp),
-            painter = painterResource(id = R.drawable.f1_car),
-            contentDescription = "F1 car",
-        )
-        Text(
-            fontSize = 25.sp,
-            fontWeight = FontWeight.Bold,
-            text = title,
-            color = Color.White,
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .padding(vertical = 20.dp)
-        )
+
+        content()
     }
-
-
-
 }
 
 

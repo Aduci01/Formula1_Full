@@ -24,10 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.adamcs.formula1.R
 import com.adamcs.formula1.data.model.Race
-import com.adamcs.formula1.ui.components.CircularLoadingSpinner
-import com.adamcs.formula1.ui.components.CurvedHeaderBackground
-import com.adamcs.formula1.ui.components.DropDownMenu
-import com.adamcs.formula1.ui.components.ExpandableTextCard
+import com.adamcs.formula1.ui.components.*
 import com.adamcs.formula1.ui.viewmodel.ScheduleViewModel
 
 @ExperimentalMaterialApi
@@ -42,23 +39,25 @@ fun ScheduleScreen(
             .padding(bottom = 40.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Box(modifier = Modifier
-            .fillMaxHeight(0.20f)
-            .fillMaxWidth(1f)) {
-            CurvedHeaderBackground(color = Color.Black)
+        CurvedHeader(){
+            Box(modifier = Modifier
+                .fillMaxHeight(1f)
+                .fillMaxWidth(1f)) {
 
-            Column(
-                modifier = Modifier.fillMaxWidth(1f),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                DropDownMenu(
-                    errorMessage = "Invalid year",
-                    seasons = Array(63) { i -> 2022 - i }
+                Column(
+                    modifier = Modifier.fillMaxWidth(1f),
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    scheduleViewModel.getSchedule(year = it)
+                    DropDownMenu(
+                        errorMessage = "Invalid year",
+                        seasons = Array(20) { i -> 2022 - i }
+                    ) {
+                        scheduleViewModel.getSchedule(year = it)
+                    }
                 }
             }
         }
+
 
         Spacer(modifier = Modifier.height(50.dp))
 

@@ -38,25 +38,26 @@ fun ResultScreen(
             .padding(bottom = 40.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Box(modifier = Modifier
-            .fillMaxHeight(0.25f)
-            .fillMaxWidth(1f)) {
-            CurvedHeaderBackground(color = Color.Black)
+        CurvedHeader(){
+            Box(modifier = Modifier
+                .fillMaxHeight(1f)
+                .fillMaxWidth(1f)) {
 
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                DropDownMenu(
-                    errorMessage = "Invalid year",
-                    seasons = Array(63) { i -> 2022 - i }
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    resultModel.getResults(year = it)
-                }
+                    DropDownMenu(
+                        errorMessage = "Invalid year",
+                        seasons = Array(63) { i -> 2022 - i }
+                    ) {
+                        resultModel.getResults(year = it)
+                    }
 
-                SwitchButtons(
-                    isDriver = isDriver
-                ){
-                    isDriver = it
+                    SwitchButtons(
+                        isDriver = isDriver
+                    ){
+                        isDriver = it
+                    }
                 }
             }
         }
