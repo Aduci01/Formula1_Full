@@ -1,6 +1,7 @@
 package com.adamcs.formula1.ui.viewmodel
 
 import android.content.Context
+import android.os.Build
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
@@ -24,6 +25,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 import javax.inject.Inject
 
@@ -73,6 +76,25 @@ class ScheduleViewModel @Inject constructor(
             val id: Int = context.resources.getIdentifier("circuit_" + race.circuit.circuitId.lowercase(), "drawable", context.packageName)
 
             race.circuit.circuitImageId = id
+        }
+    }
+
+    fun getFinishedRacesNumber() : Int {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            var raceNum = 0
+            val currentDate = LocalDateTime.now()
+
+            raceList.value.forEach { race ->
+                val raceDate = LocalDateTime.parse(race.date + ":" + race.time.dropLast(1), DateTimeFormatter.ofPattern("yyyy-MM-dd:HH:mm:ss"))
+
+                if (currentDate.isAfter(raceDate)){
+                    raceNum++
+                }
+            }
+
+            return raceNum
+        } else {
+            return 0
         }
     }
 }
