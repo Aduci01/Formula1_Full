@@ -32,31 +32,32 @@ class NewsViewModel @Inject constructor(
     var isLoaded = mutableStateOf(false)
 
     init {
-        getNews()
+        isLoaded.value = false
+
+        viewModelScope.launch(Dispatchers.IO) {
+            getNews()
+            isLoaded.value = true
+        }
     }
 
-    private fun getNews(){
-        viewModelScope.launch(Dispatchers.IO) {
-            when(val result = newsRepository.getNews()) {
-                is Resource.Success -> {
-                    newsList = result.data?.channel?.news!!
-                    filteredNewsList.value = newsList
+    private suspend fun getNews() {
+        when (val result = newsRepository.getNews()) {
+            is Resource.Success -> {
+                newsList = result.data?.channel?.news!!
+                filteredNewsList.value = newsList
 
-                    isLoaded.value = true
+                Log.d(TAG, "News fetched successfully")
+            }
+            is Resource.Error -> {
+                Log.d(TAG, "News: " + result.message.toString())
+            }
+            is Resource.Loading -> {
 
-                    Log.d(TAG, "News fetched successfully")
-                }
-                is Resource.Error -> {
-                    Log.d(TAG, "News" + result.message.toString())
-                }
-                is Resource.Loading -> {
-
-                }
             }
         }
     }
 
-    fun filterNews(query: String){
+    fun filterNews(query: String) {
         viewModelScope.launch(Dispatchers.IO) {
             filteredNewsList.value = newsList.filter {
                 it.title.lowercase().contains(query) || it.description.lowercase().contains(query)

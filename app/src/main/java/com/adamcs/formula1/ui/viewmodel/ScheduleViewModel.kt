@@ -37,7 +37,6 @@ class ScheduleViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-
     private val TAG = "SCHEDULE_VIEW_MODEL"
 
     var raceList = mutableStateOf<List<Race>>(listOf())
@@ -47,47 +46,59 @@ class ScheduleViewModel @Inject constructor(
         getSchedule(2022)
     }
 
-    fun getSchedule(year: Int){
+    fun getSchedule(year: Int) {
         isLoaded.value = false
 
         viewModelScope.launch(Dispatchers.IO) {
-            when(val result = scheduleRepository.getSchedule(year)) {
-                is Resource.Success -> {
-                    raceList.value = result.data?.data?.scheduleTable?.races!!
-                    isLoaded.value = true
+            fetchSchedule(year)
 
-                    loadResources()
+            isLoaded.value = true
+        }
+    }
 
-                    Log.d(TAG, "Schedule fetched successfully")
-                }
-                is Resource.Error -> {
-                    Log.d(TAG, "Schedule" + result.message.toString())
-                }
-                is Resource.Loading -> {
+    private suspend fun fetchSchedule(year: Int) {
+        when (val result = scheduleRepository.getSchedule(year)) {
+            is Resource.Success -> {
+                raceList.value = result.data?.data?.scheduleTable?.races!!
+                isLoaded.value = true
 
-                }
+                loadResources()
+
+                Log.d(TAG, "Schedule fetched successfully")
+            }
+            is Resource.Error -> {
+                Log.d(TAG, "Schedule" + result.message.toString())
+            }
+            is Resource.Loading -> {
+
             }
         }
     }
 
-    private fun loadResources(){
-        raceList.value.forEach {
-            race ->
-            val id: Int = context.resources.getIdentifier("circuit_" + race.circuit.circuitId.lowercase(), "drawable", context.packageName)
+    private fun loadResources() {
+        raceList.value.forEach { race ->
+            val id: Int = context.resources.getIdentifier(
+                "circuit_" + race.circuit.circuitId.lowercase(),
+                "drawable",
+                context.packageName
+            )
 
             race.circuit.circuitImageId = id
         }
     }
 
-    fun getFinishedRacesNumber() : Int {
+    fun getFinishedRacesNumber(): Int {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             var raceNum = 0
             val currentDate = LocalDateTime.now()
 
             raceList.value.forEach { race ->
-                val raceDate = LocalDateTime.parse(race.date + ":" + race.time.dropLast(1), DateTimeFormatter.ofPattern("yyyy-MM-dd:HH:mm:ss"))
+                val raceDate = LocalDateTime.parse(
+                    race.date + ":" + race.time.dropLast(1),
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd:HH:mm:ss")
+                )
 
-                if (currentDate.isAfter(raceDate)){
+                if (currentDate.isAfter(raceDate)) {
                     raceNum++
                 }
             }

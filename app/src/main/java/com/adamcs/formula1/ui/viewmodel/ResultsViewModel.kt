@@ -1,12 +1,10 @@
 package com.adamcs.formula1.ui.viewmodel
 
-import android.content.res.Resources
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.adamcs.formula1.R
 import com.adamcs.formula1.data.model.Constructor
 import com.adamcs.formula1.data.model.ConstructorResources
@@ -33,70 +31,61 @@ class ResultsViewModel @Inject constructor(
 
     var isLoaded = mutableStateOf(false)
 
-    private var constructorCoroutineJob: Job? = null
-    private var driverCoroutineJob: Job? = null
-
     init {
         getResults(2022)
     }
 
-    fun getResults(year: Int){
+    fun getResults(year: Int) {
         isLoaded.value = false;
 
-        driverCoroutineJob?.cancel()
-        constructorCoroutineJob?.cancel()
-
-        getDriverResults(year)
-        getConstructorResults(year)
-
         viewModelScope.launch(Dispatchers.IO) {
-            driverCoroutineJob?.join()
-            constructorCoroutineJob?.join()
+            val driverResult = async { getDriverResults(year) }
+            val constructorResult = async { getConstructorResults(year) }
+
+            driverResult.await()
+            constructorResult.await()
 
             isLoaded.value = true
         }
     }
 
-    private fun getDriverResults(year: Int) {
-        driverCoroutineJob = viewModelScope.launch(Dispatchers.IO) {
-            when (val result = resultRepository.getDriverRanking(year)) {
-                is Resource.Success -> {
+    private suspend fun getDriverResults(year: Int) {
+        when (val result = resultRepository.getDriverRanking(year)) {
+            is Resource.Success -> {
 
-                    resultList.value =
-                        result.data?.data?.standingsTable?.standingsLists?.get(0)?.driverResults!!
+                resultList.value =
+                    result.data?.data?.standingsTable?.standingsLists?.get(0)?.driverResults!!
 
-                    loadDriverResources()
+                loadDriverResources()
 
-                    Log.d(TAG, "Driver Results fetched successfully")
-                }
-                is Resource.Error -> {
-                    Log.d(TAG, "Driver Results" + result.message.toString())
-                }
-                is Resource.Loading -> {
+                Log.d(TAG, "Driver Results fetched successfully")
+            }
+            is Resource.Error -> {
+                Log.d(TAG, "Driver Results" + result.message.toString())
+            }
+            is Resource.Loading -> {
 
-                }
             }
         }
+
     }
 
-    private fun getConstructorResults(year: Int) {
-        constructorCoroutineJob = viewModelScope.launch(Dispatchers.IO) {
-            when (val result = resultRepository.getConstructorRanking(year)) {
-                is Resource.Success -> {
+    private suspend fun getConstructorResults(year: Int) {
+        when (val result = resultRepository.getConstructorRanking(year)) {
+            is Resource.Success -> {
 
-                    constructorResultList.value =
-                        result.data?.data?.standingsTable?.standingsLists?.get(0)?.constructorResults!!
+                constructorResultList.value =
+                    result.data?.data?.standingsTable?.standingsLists?.get(0)?.constructorResults!!
 
-                    loadConstructorResources()
+                loadConstructorResources()
 
-                    Log.d(TAG, "Constructor Results fetched successfully")
-                }
-                is Resource.Error -> {
-                    Log.d(TAG, "Constructor Results" + result.message.toString())
-                }
-                is Resource.Loading -> {
+                Log.d(TAG, "Constructor Results fetched successfully")
+            }
+            is Resource.Error -> {
+                Log.d(TAG, "Constructor Results" + result.message.toString())
+            }
+            is Resource.Loading -> {
 
-                }
             }
         }
     }
