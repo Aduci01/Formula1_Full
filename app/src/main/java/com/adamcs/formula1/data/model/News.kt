@@ -8,7 +8,7 @@ class News {
     @field:Element(name = "title", required = false)
     lateinit var title: String
     @field:Element(name = "description", required = false)
-    lateinit var description: String
+    var description: String = ""
     @field:Element(name = "link", required = false)
     lateinit var link: String
 

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "398315423368",
+    "project_id": "formula1-47c39",
+    "storage_bucket": "formula1-47c39.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:398315423368:android:55c34fa6fb3837eae7c13d",
+        "android_client_info": {
+          "package_name": "com.adamcs.formula1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "398315423368-uf6am3k61i4fp2lav3st6i80if48o27h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMP4SdJQI2alS269pF2P2dTQCwg9Ly_DY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "398315423368-uf6am3k61i4fp2lav3st6i80if48o27h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

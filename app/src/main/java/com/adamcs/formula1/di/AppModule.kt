@@ -7,6 +7,7 @@ import com.adamcs.formula1.data.api.ScheduleApi
 import com.adamcs.formula1.data.repository.*
 import com.adamcs.formula1.util.Constants.ERGAST_URL
 import com.adamcs.formula1.util.Constants.NEWS_URL
+import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,6 +20,9 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+    @Provides
+    fun provideFirebaseAuth() = FirebaseAuth.getInstance()
+
     @Singleton
     @Provides
     fun provideDriverRankingApi(): DriverResultApi {
