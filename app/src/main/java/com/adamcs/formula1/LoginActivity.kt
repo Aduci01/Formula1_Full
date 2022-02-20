@@ -13,15 +13,13 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class LoginActivity: ComponentActivity() {
 
-    val viewModel by viewModels<AuthViewModel>()
-
     @ExperimentalComposeUiApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
             Formula1Theme {
-                AuthScreen()
+                AuthScreen(activity = this)
             }
         }
     }

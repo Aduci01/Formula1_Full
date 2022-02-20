@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -18,6 +19,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -27,6 +29,7 @@ import com.adamcs.formula1.ui.theme.Shapes
 import com.adamcs.formula1.ui.theme.gold
 import java.lang.NumberFormatException
 
+@ExperimentalComposeUiApi
 @Composable
 fun DropDownMenu(
     seasons: Array<Int>,
@@ -54,6 +57,8 @@ fun DropDownMenu(
     else
         baseColor
 
+    val keyboard = LocalSoftwareKeyboardController.current
+
     Column(
         Modifier
             .padding(20.dp)
@@ -68,6 +73,7 @@ fun DropDownMenu(
         OutlinedTextField(
             isError = isError,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            keyboardActions = KeyboardActions(onDone = { keyboard?.hide() }),
             value = selectedSeason,
             onValueChange = {
                 if (it.length <= 4){

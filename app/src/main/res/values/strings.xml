@@ -7,4 +7,8 @@
     <string name="check_full_article">check full article</string>
     <string name="season">Season</string>
     <string name="schedule">Schedule</string>
+    <string name="formula1_title">Formula 1</string>
+    <string name="PLEASE_LOG_IN_OR_REGISTER">Please log in or register</string>
+    <string name="register">Register</string>
+    <string name="login">Log in</string>
 </resources>

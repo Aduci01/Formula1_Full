@@ -4,22 +4,26 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.adamcs.formula1.ui.theme.FormulaFont
 
+@ExperimentalComposeUiApi
 @Composable
 fun SearchBar(
     modifier: Modifier,
@@ -34,6 +38,7 @@ fun SearchBar(
         mutableStateOf(placeholderText != "")
     }
 
+    val keyboard = LocalSoftwareKeyboardController.current
 
     Box(modifier = modifier){
         BasicTextField(value = text, onValueChange = {
@@ -49,7 +54,8 @@ fun SearchBar(
                 .fillMaxWidth()
                 .shadow(5.dp, CircleShape)
                 .background(Color.White, CircleShape)
-                .padding(horizontal = 40.dp, 12.dp)
+                .padding(horizontal = 40.dp, 12.dp),
+            keyboardActions = KeyboardActions(onDone = { keyboard?.hide() })
         )
 
 
