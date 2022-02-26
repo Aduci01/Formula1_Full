@@ -12,6 +12,7 @@ import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -32,6 +33,7 @@ import com.adamcs.formula1.ui.theme.Shapes
 import com.adamcs.formula1.ui.theme.gold
 import com.adamcs.formula1.ui.viewmodel.ScheduleViewModel
 
+@ExperimentalComposeUiApi
 @ExperimentalMaterialApi
 @Composable
 fun ScheduleScreen(

@@ -39,8 +39,9 @@ import com.adamcs.formula1.ui.viewmodel.AuthViewModel
 @ExperimentalComposeUiApi
 @Composable
 fun AuthScreen(
-    viewModel: AuthViewModel = hiltViewModel(),
-    activity: Activity
+    viewModel: AuthViewModel,
+    activity: Activity,
+    onSignInGoogle: () -> Unit = {}
 ) {
     val context = LocalContext.current
 
@@ -84,7 +85,7 @@ fun AuthScreen(
 
         Spacer(modifier = Modifier.height(30.dp))
 
-        LoginPanel(viewModel, context = context, activity = activity)
+        LoginPanel(viewModel, context = context, activity = activity, onSignInGoogle = onSignInGoogle)
     }
 }
 
@@ -93,7 +94,8 @@ fun AuthScreen(
 private fun LoginPanel(
     viewModel: AuthViewModel,
     context: Context,
-    activity: Activity
+    activity: Activity,
+    onSignInGoogle: () -> Unit = {}
 ) {
     val (focusEmail, focusPassword) = remember { FocusRequester.createRefs() }
     val focusColor = Purple700
@@ -179,7 +181,7 @@ private fun LoginPanel(
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        OtherLoginTypes()
+        OtherLoginTypes(onSignInGoogle = onSignInGoogle)
     }
 }
 
@@ -282,7 +284,9 @@ private fun PasswordInputField(
 }
 
 @Composable
-private fun OtherLoginTypes() {
+private fun OtherLoginTypes(
+    onSignInGoogle: () -> Unit = {}
+) {
     Row(
         modifier = Modifier.fillMaxWidth(0.7f),
         Arrangement.SpaceEvenly
@@ -305,7 +309,7 @@ private fun OtherLoginTypes() {
             )
         }
         Button(
-            onClick = { /*TODO*/ },
+            onClick = { onSignInGoogle() },
             shape = RoundedCornerShape(50),
             modifier = Modifier
                 .height(45.dp)

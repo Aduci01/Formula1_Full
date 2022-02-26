@@ -13,6 +13,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -34,6 +35,7 @@ import com.adamcs.formula1.R
 import com.adamcs.formula1.ui.components.*
 import com.adamcs.formula1.ui.theme.scarlet
 
+@ExperimentalComposeUiApi
 @ExperimentalMaterialApi
 @Composable
 fun NewsScreen(
@@ -142,11 +144,4 @@ private fun NewsContent(
             }
         )
     }
-}
-
-@ExperimentalMaterialApi
-@Composable
-@Preview
-fun NewsScreenPreview() {
-    NewsScreen()
 }

@@ -13,6 +13,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -26,6 +27,7 @@ import com.adamcs.formula1.ui.theme.Shapes
 import com.adamcs.formula1.ui.theme.gold
 import com.adamcs.formula1.ui.viewmodel.ResultsViewModel
 
+@ExperimentalComposeUiApi
 @Composable
 fun ResultScreen(
     resultModel: ResultsViewModel = hiltViewModel()
@@ -153,10 +155,4 @@ private fun ConstructorStandingUi(resultModel: ResultsViewModel){
             }
         }
     }
-}
-
-@Composable
-@Preview
-fun ResultScreenPreview() {
-    ResultScreen()
 }

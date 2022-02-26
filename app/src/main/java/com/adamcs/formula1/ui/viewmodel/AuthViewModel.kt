@@ -20,12 +20,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.adamcs.formula1.MainActivity
-import com.adamcs.formula1.data.model.News
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.GoogleAuthProvider
 
@@ -75,34 +70,20 @@ class AuthViewModel @Inject constructor(
             }
     }
 
-/*
-    fun logInWithGoogle(
-        activity: Activity,
-        context: Context
-    ) {
-        val gso = GoogleSignInOptions
-            .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("392916505764-pl2k16l620b09aeopgrnvm2qhnmg7a1c.apps.googleusercontent.com")
-            .requestEmail()
-            .build()
-    }
-
-    private fun firebaseAuthWithGoogle(idToken: String, activity: Activity) {
-        var googleSignInClient = GoogleSignIn.getClient(this, gso)
-
+    fun firebaseAuthWithGoogle(idToken: String, activity: Activity) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
             .addOnCompleteListener(activity) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
-                    user.value = auth.currentUser
+                    val user = auth.currentUser
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
                 }
             }
-    }*/
+    }
 
     private fun handleResult(context: Context, result: Task<AuthResult>) {
         if (result.isSuccessful) {
